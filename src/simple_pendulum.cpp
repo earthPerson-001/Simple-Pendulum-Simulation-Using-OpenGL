@@ -429,16 +429,16 @@ static void deallocate_memory_locations_from_heap()
 #endif
 }
 
-void initialize_simple_pendulum_simulation_with_defaults()
+void initialize_simple_pendulum_simulation_with_defaults(GLfloat radius, GLfloat current_angle)
 {
     allocate_memory_locations_in_heap();
 
     g_center[0] = SCR_WIDTH / 2.0;
     g_center[1] = SCR_HEIGHT;
 
-    g_radius = 400;
+    g_radius = radius;
 
-    g_current_angle = 45;
+    g_current_angle = current_angle;
 
     g_bob_center[0] = 0;
     g_bob_center[1] = 0;
@@ -512,8 +512,8 @@ void simple_pendulum_simulation_step()
     glEnd();
 
     // update for next cycle
-    g_current_acceleration = g_mass * g_acceleration_due_to_gravity_g / g_radius * cos(g_current_angle * M_PI / 180);
-    g_current_velocity += g_current_acceleration; // for large angles
+    g_current_acceleration = g_acceleration_due_to_gravity_g / g_radius * cos(g_current_angle * M_PI / 180);
+    g_current_velocity += g_current_acceleration; // for large lengths of string
     g_current_velocity -= g_current_velocity * g_damping_factor;
     g_current_angle += g_current_velocity;
 }
