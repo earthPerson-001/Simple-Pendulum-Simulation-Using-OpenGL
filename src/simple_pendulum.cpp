@@ -470,8 +470,8 @@ void simple_pendulum_simulation_step()
     glPointSize(5);
 
     // calculating the center of the bob
-    g_bob_center[0] = g_center[0] + g_radius * cos(g_current_angle * M_PI / 180);
-    g_bob_center[1] = g_center[1] + g_radius * sin(-g_current_angle * M_PI / 180);
+    g_bob_center[0] = g_center[0] + g_radius * sin(g_current_angle * M_PI / 180);
+    g_bob_center[1] = g_center[1] - g_radius * cos(g_current_angle * M_PI / 180);
 
     std::array<GLfloat, 2> normalized_bob_center_points = device_specific_to_normalized(g_bob_center[0], g_bob_center[1]);
 
@@ -512,7 +512,7 @@ void simple_pendulum_simulation_step()
     glEnd();
 
     // update for next cycle
-    g_current_acceleration = g_acceleration_due_to_gravity_g / g_radius * cos(g_current_angle * M_PI / 180);
+    g_current_acceleration = g_acceleration_due_to_gravity_g / g_radius * sin(-g_current_angle * M_PI / 180);
     g_current_velocity += g_current_acceleration; // for large lengths of string
     g_current_velocity -= g_current_velocity * g_damping_factor;
     g_current_angle += g_current_velocity;
