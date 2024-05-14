@@ -268,6 +268,7 @@
 #include <array>
 
 #include "globals.hpp"
+#include "simple_pendulum.hpp"
 
 // tunables
 GLfloat g_radius = 0;
@@ -502,7 +503,7 @@ void simple_pendulum_simulation_step()
     draw_line(g_center, g_bob_center, (GLfloat *)COLOR_BLUE);
 
     // drawing a filled circle at the center of the bob
-    draw_filled_circle(g_bob_center, 50, (GLfloat *)COLOR_WHITE, (GLfloat *)COLOR_BLACK);
+    draw_filled_circle(g_bob_center, RADIUS_OF_BOB, (GLfloat *)COLOR_WHITE, (GLfloat *)COLOR_BLACK);
 
     // plotting a point at center of the bob
     glBegin(GL_POINTS);

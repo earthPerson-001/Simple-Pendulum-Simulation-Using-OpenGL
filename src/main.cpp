@@ -184,6 +184,7 @@
 // // GLfloat rectWidth = 0.5f;
 // // GLfloat rectHeight = 0.5f;
 
+
 // // // Function to get the full path to the dimensions file using the TEMP environment variable
 // // std::string getTempPath() {
 // //     const char* tempPath = std::getenv("TEMP");
