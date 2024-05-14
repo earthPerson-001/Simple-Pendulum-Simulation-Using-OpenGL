@@ -28,3 +28,6 @@ extern GLfloat g_current_angle;
 extern GLfloat *g_bob_center;
 extern GLfloat g_current_acceleration;
 extern GLfloat g_current_velocity;
+
+extern uint8_t g_current_previous_index;
+extern uint8_t g_n_filled; // keeping track of number of filled entries initially

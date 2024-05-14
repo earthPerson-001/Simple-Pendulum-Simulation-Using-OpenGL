@@ -298,6 +298,12 @@ void resetSimulation();
 
 bool resetFlag = false;
 
+#if defined _WIN32
+ #define seperator "\\"
+#else
+ #define seperator "/"
+#endif
+
 int main(int argc, char **argv)
 {
     // Initialize GLFW
@@ -395,7 +401,12 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
         float ny = 1.0f - (2.0f * ypos) / height;
 
         if (nx >= 0.7f && nx <= 1.0f && ny >= -1.0f && ny <= -0.7f) {
+#if defined _WIN32
             system("cmd /c start /wait get_dimensions.bat");
+#else
+            system("sh get_dimensions.sh");  
+#endif
+
             openTerminal();
             resetFlag = true; // Set the reset flag to true
         }
@@ -403,27 +414,44 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 }
 
 std::string getTempPath() {
+#if defined _WIN32
     const char* tempPath = std::getenv("TEMP");
+#else
+    const char* tempPath = "/tmp";
+#endif
     if (!tempPath) {
         std::cerr << "TEMP environment variable not found." << std::endl;
         return "";
     }
-    return std::string(tempPath) + "\\dimensions.txt";
+    return (std::string(tempPath) +  seperator) + "dimensions.txt";
 }
 
 void openTerminal() {
     std::string filePath = getTempPath();
-    std::ifstream file(filePath);
-    if (file.is_open()) {
-        file >> g_mass >> g_acceleration_due_to_gravity_g >> g_damping_factor;
-        file.close();
+    std::fstream file;
 
-    } else {
-        std::cerr << "Failed to open file at: " << filePath << std::endl;
+    file.open(filePath,  std::fstream::in | std::fstream::out | std::fstream::app);
+
+    if (!file.is_open()) {
+        std::cout << "Cannot open file, the file: " << filePath <<" does not exist. Creating new file..";
+
+        file.open(filePath,  std::fstream::in | std::fstream::out | std::fstream::trunc);
+    } 
+
+    if(file.is_open()) {
+        file >> g_mass >> g_acceleration_due_to_gravity_g >> g_damping_factor >> g_radius >> g_current_angle;
+        std::cout << "Got the values: \n Mass(M): " << g_mass << "\n Acceleration Due to Gravity(g): " << g_acceleration_due_to_gravity_g
+            << "\n Damping Factor: " << g_damping_factor << "\n Length of string: " << g_radius << "\n Starting Angle: " << g_current_angle << std::endl;
+        file.close();
+    }
+    else {
+        std::cerr << "Couldn't open or create file " << filePath << " . So, the parameters couldn't be updated.";
     }
 }
 
 void resetSimulation() {
-    initialize_simple_pendulum_simulation_with_defaults();
+    initialize_simple_pendulum_simulation_with_defaults(g_radius, g_current_angle);
+    g_n_filled = 0;
+    g_current_previous_index = 0;
 }
 

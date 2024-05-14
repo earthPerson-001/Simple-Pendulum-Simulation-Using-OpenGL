@@ -22,6 +22,12 @@ set(SRCS "src/main.cpp")
 # append lists to add source files
 list(APPEND SRCS "src/simple_pendulum.cpp")
 
+if(WIN32)
+    configure_file(scripts/get_dimensions.bat get_dimensions.bat COPYONLY)
+else() 
+    configure_file(scripts/get_dimensions.sh get_dimensions.sh COPYONLY)
+endif()
+
 
 if (APPLE)
     # create bundle on apple compiles
