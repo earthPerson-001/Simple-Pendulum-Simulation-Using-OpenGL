@@ -1,0 +1,26 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build hello world",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "main.cpp",
+                "-o",
+                "main.exe",
+                "-I",
+                "C:/Users/Legion/Downloads/MinGW/x86_64-w64-mingw32/include",
+                "-L",
+                "C:/Users/Legion/Downloads/MinGW/x86_64-w64-mingw32/lib",
+                "-lfreeglut",
+                "-lopengl32"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

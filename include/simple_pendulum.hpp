@@ -1,6 +1,6 @@
 #pragma once
 
-// #define SHOW_TRAILING_LINE 0
+#define SHOW_TRAILING_LINE 1
 
 constexpr int RADIUS_OF_BOB = 50;
 

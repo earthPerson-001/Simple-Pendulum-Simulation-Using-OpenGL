@@ -9,6 +9,7 @@ project("Simple-Pendulum" VERSION 0.1 LANGUAGES CXX C)
 
 set(USE_GLUT False)
 
+
 message(STATUS "The build type is set as ${CMAKE_BUILD_TYPE}.")
 # set build type as debug
 if (NOT DEFINED CMAKE_BUILD_TYPE)
@@ -32,7 +33,7 @@ endif()
 set(OpenGL_GL_PREFERENCE "LEGACY")
 
 if(USE_GLUT)
-    find_package(OpenGL REQUIRED GL)
+    find_package(OpenGL)
 else()
     find_package(OpenGL)
 endif()

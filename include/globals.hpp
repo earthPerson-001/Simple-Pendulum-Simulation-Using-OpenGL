@@ -14,4 +14,17 @@ constexpr float COLOR_GREEN[3] = {0.0, 1.0, 0.0};
 constexpr float COLOR_BLUE[3] = {0.0, 0.0, 1.0};
 
 constexpr uint16_t N_LINES_FOR_CIRCLE = 200;
+
 constexpr uint16_t N_TRIANGLES_FOR_FILLED_CIRCLE = 200;
+
+extern GLfloat g_radius;
+extern GLfloat g_mass;
+extern GLfloat g_acceleration_due_to_gravity_g;
+extern GLfloat g_damping_factor;
+
+// Define other global variables here
+extern GLfloat *g_center;
+extern GLfloat g_current_angle;
+extern GLfloat *g_bob_center;
+extern GLfloat g_current_acceleration;
+extern GLfloat g_current_velocity;
