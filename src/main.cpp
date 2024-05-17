@@ -113,10 +113,9 @@ void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) // pause and play
     {
         paused = !paused;
-        printf("Changed paused to %i", paused);
     }
 }
 
@@ -160,31 +159,34 @@ void cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
     double ypos_prime = SCR_HEIGHT - ypos;
 
     // if left button is being pressed and the cursor is within the bob
-    if (GLFW_PRESS == state && (((g_bob_center[0] - RADIUS_OF_BOB) < xpos_prime) && (xpos_prime < (g_bob_center[0] + RADIUS_OF_BOB))) && (((g_bob_center[1] - RADIUS_OF_BOB) < ypos_prime) && (ypos_prime < (g_bob_center[1] + RADIUS_OF_BOB))))
+    if (GLFW_PRESS == state)
     {
-        paused = true;
-        // printf("Time %0.3f: Cursor position: %f %f\n",
-        //        glfwGetTime(), xpos_prime, ypos_prime);
+        if ((g_bob_center[0] - RADIUS_OF_BOB) < xpos_prime 
+            && xpos_prime < (g_bob_center[0] + RADIUS_OF_BOB) 
+            && (g_bob_center[1] - RADIUS_OF_BOB) < ypos_prime 
+            && ypos_prime < (g_bob_center[1] + RADIUS_OF_BOB))
+        {
+            paused = true;
+            // printf("Time %0.3f: Cursor position: %f %f\n",
+            //        glfwGetTime(), xpos_prime, ypos_prime);
 
-        // printf("Current bob position %0.3f, %0.3f\n", g_bob_center[0], g_bob_center[1]);
+            // printf("Current bob position %0.3f, %0.3f\n", g_bob_center[0], g_bob_center[1]);
 
-        g_bob_center[0] = xpos_prime;
-        g_bob_center[1] = ypos_prime;
+            g_bob_center[0] = xpos_prime;
+            g_bob_center[1] = ypos_prime;
 
-        // updating the current angle(in degrees) based on the position
-        g_current_angle = -atan((xpos_prime - g_center[0]) / (ypos_prime - g_center[1])) * 180.0 / M_PI;
+            // updating the current angle(in degrees) based on the position
+            g_current_angle = -atan((xpos_prime - g_center[0]) / (ypos_prime - g_center[1])) * 180.0 / M_PI;
 
-        // updating the length based on the current position
-        g_radius = sqrt(pow(xpos_prime - g_center[0], 2) + pow(ypos_prime - g_center[1], 2));
+            // updating the length based on the current position
+            g_radius = sqrt(pow(xpos_prime - g_center[0], 2) + pow(ypos_prime - g_center[1], 2));
 
-        // clearing out the previous points
-        g_n_filled = 0;
-        g_current_previous_index = 0;
+            // clearing out the previous points
+            g_n_filled = 0;
+            g_current_previous_index = 0;
+        }
     }
-    else if (GLFW_RELEASE == state)
-    {
-        paused = false;
-    }
+
 }
 
 std::string getTempPath()
